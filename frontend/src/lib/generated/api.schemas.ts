@@ -1,0 +1,109 @@
+export interface HealthStatus {
+   status: string;
+}
+
+export interface Clinic {
+   id: number;
+   name: string;
+   tagline: string;
+   address: string;
+   phone: string;
+   openingHours: string;
+   services: string[];
+}
+
+export interface Doctor {
+   id: number;
+   name: string;
+   specialty: string;
+   initials: string;
+   experience: string;
+}
+
+export type AppointmentSlotStatus =
+   (typeof AppointmentSlotStatus)[keyof typeof AppointmentSlotStatus];
+
+export const AppointmentSlotStatus = {
+   available: "available",
+   booked: "booked",
+} as const;
+
+export interface AppointmentSlot {
+   id: number;
+   doctorId: number;
+   doctorName: string;
+   specialty: string;
+   date: string;
+   startTime: string;
+   endTime: string;
+   status: AppointmentSlotStatus;
+}
+
+export type AppointmentStatus =
+   (typeof AppointmentStatus)[keyof typeof AppointmentStatus];
+
+export const AppointmentStatus = {
+   confirmed: "confirmed",
+   completed: "completed",
+   cancelled: "cancelled",
+} as const;
+
+export interface Appointment {
+   id: number;
+   confirmationCode: string;
+   patientName: string;
+   patientPhone: string;
+   /** @nullable */
+   patientEmail?: string | null;
+   /** @nullable */
+   reason?: string | null;
+   doctorId: number;
+   doctorName: string;
+   specialty: string;
+   date: string;
+   startTime: string;
+   endTime: string;
+   status: AppointmentStatus;
+   reminderEnabled: boolean;
+   createdAt: string;
+}
+
+export interface AppointmentInput {
+   slotId: number;
+   /** @minLength 2 */
+   patientName: string;
+   /** @minLength 7 */
+   patientPhone: string;
+   /** @nullable */
+   patientEmail?: string | null;
+   /** @nullable */
+   reason?: string | null;
+   reminderEnabled?: boolean;
+}
+
+export interface ReminderInput {
+   reminderEnabled: boolean;
+}
+
+export interface ClinicSummary {
+   nextAvailableDate: string;
+   availableToday: number;
+   totalDoctors: number;
+   services: string[];
+}
+
+export interface Error {
+   error: string;
+}
+
+export type ListAppointmentSlotsParams = {
+   date?: string;
+   doctorId?: number;
+};
+
+export type ListPatientAppointmentsParams = {
+   /**
+    * @minLength 7
+    */
+   phone: string;
+};
