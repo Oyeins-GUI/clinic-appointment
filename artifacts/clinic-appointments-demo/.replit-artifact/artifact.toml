@@ -1,0 +1,29 @@
+kind = "video"
+videoAspectRatio = "16:9"
+previewPath = "/clinic-appointments-demo/"
+title = "NayaCare Demo Video"
+description = "A short 16:9 product demo showing how NayaCare helps Lagos patients find availability, book a clinic visit, receive confirmation, and manage reminders."
+version = "1.0.0"
+id = "artifacts/clinic-appointments-demo"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/clinic-appointments-demo/" ]
+localPort = 21585
+
+[services.development]
+run = "pnpm --filter @workspace/clinic-appointments-demo run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clinic-appointments-demo", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/clinic-appointments-demo/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21585"
+BASE_PATH = "/clinic-appointments-demo/"
