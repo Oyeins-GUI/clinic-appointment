@@ -1,6 +1,6 @@
-# [Project name]
+# NayaCare Clinic Appointment System
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+NayaCare helps patients in Lagos find clinic availability, book an appointment, and manage confirmation and reminder details without waiting in a queue.
 
 ## Run & Operate
 
@@ -22,15 +22,24 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/clinic-appointments` — patient-facing React + Vite web app at `/`
+- `artifacts/api-server/src/routes/clinic.ts` — clinic, doctor, availability, and summary endpoints
+- `artifacts/api-server/src/routes/appointments.ts` — booking, confirmation, patient lookup, and reminder endpoints
+- `lib/api-spec/openapi.yaml` — API source of truth
+- `lib/db/src/schema/clinic.ts` — Drizzle schema for clinic, doctor, slot, and appointment data
+- `README.md` — setup instructions and demo walkthrough
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- API contracts are defined in OpenAPI and generated into the React client and Zod validation schemas.
+- Calendar days use PostgreSQL `date` columns so clinic availability is not shifted by timezone conversion.
+- Booking updates the slot and creates the appointment in one transaction to prevent double booking.
+- Patient lookup uses the phone number entered during booking for the MVP; no local authentication was added.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Patients browse upcoming availability, filter by doctor, book a visit, see a confirmation code, manage reminders, and look up appointments by phone.
+- The clinic details view exposes services, opening hours, address, doctors, and contact information.
 
 ## User preferences
 
